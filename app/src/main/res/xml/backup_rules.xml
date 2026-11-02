@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Aturan backup untuk Android 11 ke bawah. Data rekam medis dikecualikan seluruhnya.
+    Untuk Android 12+ lihat data_extraction_rules.xml.
+-->
+<full-backup-content>
+    <exclude domain="root" />
+    <exclude domain="file" />
+    <exclude domain="database" />
+    <exclude domain="sharedpref" />
+    <exclude domain="external" />
+</full-backup-content>
