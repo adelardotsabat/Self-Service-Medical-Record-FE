@@ -1,0 +1,35 @@
+package com.example.selfmedicalrecord.data.auth
+
+/**
+ * Kontrak untuk autentikasi dan pendaftaran.
+ *
+ * Saat ini hanya diimplementasikan oleh [FakeAuthRepository]. Ketika API Laravel siap,
+ * buat implementasi baru (Retrofit) dan ganti yang dipakai ViewModel; UI tidak perlu diubah.
+ */
+interface AuthRepository {
+    suspend fun login(email: String, password: String): Result<Unit>
+
+    /** Langkah 1 register: membuat akun dengan email dan kata sandi. */
+    suspend fun register(email: String, password: String): Result<Unit>
+
+    /** Langkah 2 register: melengkapi data diri pasien. */
+    suspend fun saveProfile(profile: PatientProfile): Result<Unit>
+
+    /** Meminta tautan pengaturan ulang kata sandi dikirim ke [email]. */
+    suspend fun requestPasswordReset(email: String): Result<Unit>
+
+    /** Mengganti kata sandi saat sudah masuk. Gagal jika [currentPassword] salah. */
+    suspend fun changePassword(currentPassword: String, newPassword: String): Result<Unit>
+
+    /** Keluar dari akun. Kelak: hapus token tersimpan dan beri tahu server. */
+    suspend fun logout(): Result<Unit>
+}
+
+data class PatientProfile(
+    val fullName: String,
+    val nik: String,
+    /** Null jika pengguna tidak memilih. */
+    val gender: String?,
+    /** Tanggal lahir sebagai epoch millis (UTC, tengah malam), apa adanya dari date picker. */
+    val birthDateMillis: Long
+)
